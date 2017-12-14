@@ -17,9 +17,6 @@
 #include "gtkscope.h"
 #include "gtkscopewin.h"
 
-#define DEFAULT_WIDTH 1024 
-#define DEFAULT_HEIGHT 768
-
 struct _GtkScopeApp
 {
 	GtkApplication parent;
