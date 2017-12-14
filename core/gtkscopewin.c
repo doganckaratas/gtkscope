@@ -12,27 +12,6 @@
 #include "gtkscope.h"
 #include "gtkscopewin.h"
 
-struct _GtkScopeAppWindow
-{
-	GtkApplicationWindow parent;
-};
-
-struct _GtkScopeAppWindowPrivate
-{
-	GSettings *settings;
-	GtkWidget *stack;
-	GtkWidget *search;
-	GtkWidget *searchbar;
-	GtkWidget *searchentry;
-	GtkWidget *gears;
-	GtkWidget *sidebar;
-	GtkWidget *words;
-	GtkWidget *lines;
-	GtkWidget *lines_label;
-};
-
-typedef struct _GtkScopeAppWindowPrivate GtkScopeAppWindowPrivate;
-
 G_DEFINE_TYPE(GtkScopeAppWindow, gtkscope_app_window, GTK_TYPE_APPLICATION_WINDOW);
 
 static void gtkscope_app_window_init (GtkScopeAppWindow *app)

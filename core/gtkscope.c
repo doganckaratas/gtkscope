@@ -17,11 +17,6 @@
 #include "gtkscope.h"
 #include "gtkscopewin.h"
 
-struct _GtkScopeApp
-{
-	GtkApplication parent;
-};
-
 G_DEFINE_TYPE(GtkScopeApp, gtkscope_app, GTK_TYPE_APPLICATION);
 
 static void gtkscope_app_init(GtkScopeApp *app);

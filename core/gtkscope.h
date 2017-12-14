@@ -14,8 +14,13 @@
 
 #define DEFAULT_WIDTH 1024 
 #define DEFAULT_HEIGHT 768
-
 #define GTKSCOPE_APP_TYPE (gtkscope_app_get_type ())
+
+struct _GtkScopeApp
+{
+	GtkApplication parent;
+};
+
 G_DECLARE_FINAL_TYPE (GtkScopeApp, gtkscope_app, GTKSCOPE, APP, GtkApplication)
 
 GtkScopeApp     *gtkscope_app_new       (void);

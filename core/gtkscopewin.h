@@ -13,8 +13,28 @@
 #include <gtk/gtk.h>
 #include "gtkscope.h"
 
-
 #define GTKSCOPE_APP_WINDOW_TYPE (gtkscope_app_window_get_type ())
+
+struct _GtkScopeAppWindow
+{
+	GtkApplicationWindow parent;
+};
+
+struct _GtkScopeAppWindowPrivate
+{
+	GSettings *settings;
+	GtkWidget *stack;
+	GtkWidget *search;
+	GtkWidget *searchbar;
+	GtkWidget *searchentry;
+	GtkWidget *gears;
+	GtkWidget *sidebar;
+	GtkWidget *words;
+	GtkWidget *lines;
+	GtkWidget *lines_label;
+};
+
+typedef struct _GtkScopeAppWindowPrivate GtkScopeAppWindowPrivate;
 
 G_DECLARE_FINAL_TYPE(GtkScopeAppWindow, gtkscope_app_window, GTKSCOPE, APP_WINDOW, GtkApplicationWindow);
 //G_DEFINE_TYPE_WITH_PRIVATE(GtkScopeAppWindow, gtkscope_app_window, GTK_TYPE_APPLICATION_WINDOW);
