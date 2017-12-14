@@ -17,6 +17,9 @@
 #include "gtkscope.h"
 #include "gtkscopewin.h"
 
+#define DEFAULT_WIDTH 1024 
+#define DEFAULT_HEIGHT 768
+
 struct _GtkScopeApp
 {
 	GtkApplication parent;
@@ -64,7 +67,7 @@ static void gtkscope_app_activate(GtkScopeApp *app)
         box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
         gtk_box_pack_start(GTK_BOX(box), menu, FALSE, FALSE, 3);
         gtk_container_add(GTK_CONTAINER(win), box);
-        gtk_window_set_default_size(GTK_WINDOW(win), 800, 600);
+        gtk_window_set_default_size(GTK_WINDOW(win), DEFAULT_WIDTH, DEFAULT_HEIGHT);
         gtk_window_set_title(GTK_WINDOW(win), "GTKScope");
         g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(gtkscope_app_exit), NULL);
         gtk_window_present (GTK_WINDOW(win));
