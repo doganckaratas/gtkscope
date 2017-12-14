@@ -45,20 +45,32 @@ static void gtkscope_app_activate(GtkScopeApp *app)
         GtkWidget *m_file;
         GtkWidget *ms_file;
         GtkWidget *ms_file_quit;
+        GtkWidget *m_help;
+        GtkWidget *ms_help;
+        GtkWidget *ms_help_about;
 
-        win = gtkscope_app_window_new (GTKSCOPE_APP(app));
         menu = gtk_menu_bar_new();
+        win = gtkscope_app_window_new (GTKSCOPE_APP(app));
+
         m_file = gtk_menu_new();
         ms_file = gtk_menu_item_new_with_label("File");
         ms_file_quit = gtk_menu_item_new_with_label("Quit");
         gtk_menu_item_set_submenu(GTK_MENU_ITEM(ms_file), m_file);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_file), ms_file_quit);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), ms_file);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m_file), ms_file_quit);
         g_signal_connect(G_OBJECT(ms_file_quit), "activate", G_CALLBACK(gtkscope_app_exit), NULL);
         
+        m_help = gtk_menu_new();
+        ms_help= gtk_menu_item_new_with_label("Help");
+        ms_help_about = gtk_menu_item_new_with_label("About");
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(ms_help), m_help);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), ms_help);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m_help), ms_help_about);
+
         box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
         gtk_box_pack_start(GTK_BOX(box), menu, FALSE, FALSE, 3);
         gtk_container_add(GTK_CONTAINER(win), box);
+
         gtk_window_set_default_size(GTK_WINDOW(win), DEFAULT_WIDTH, DEFAULT_HEIGHT);
         gtk_window_set_title(GTK_WINDOW(win), "GTKScope");
         g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(gtkscope_app_exit), NULL);
@@ -98,7 +110,6 @@ GtkScopeApp *gtkscope_app_new (void)
 static void gtkscope_app_exit(GtkWidget *gtk_widget) 
 {
         g_print("Exit pressed");
-        gtk_main_quit();
         exit(0);
 }
 
