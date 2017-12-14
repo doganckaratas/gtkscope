@@ -63,7 +63,7 @@ static void gtkscope_app_activate(GtkScopeApp *app)
         gtk_window_set_title(GTK_WINDOW(win), "GTKScope");
         g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(gtkscope_app_exit), NULL);
         gtk_window_present (GTK_WINDOW(win));
-        gtk_widget_show_all(win);
+        gtk_widget_show_all(box);
 }
 
 static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, const gchar *hint)
@@ -86,8 +86,8 @@ static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, con
 
 static void gtkscope_app_class_init (GtkScopeAppClass *class)
 {
-	G_APPLICATION_CLASS (class)->activate = gtkscope_app_activate;
-	G_APPLICATION_CLASS (class)->open = gtkscope_app_open;
+	G_APPLICATION_CLASS (class)->activate = (void* ) gtkscope_app_activate;
+	G_APPLICATION_CLASS (class)->open = (void* ) gtkscope_app_open;
 }
 
 GtkScopeApp *gtkscope_app_new (void)
