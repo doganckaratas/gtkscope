@@ -1,3 +1,12 @@
+/**
+ * GTKScope Project 
+ * v0.1 - 12/2017
+ * Dogan C. Karatas
+ *
+ * This code is released under GNU/GPL v3 License.
+ * For more info, check out LICENSE file
+ */
+
 #ifndef __GTKSCOPE_H
 #define __GTKSCOPE_H
 
