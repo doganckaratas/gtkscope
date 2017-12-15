@@ -45,6 +45,12 @@ static void gtkscope_app_activate(GtkScopeApp *app)
         GtkWidget *m_file;
         GtkWidget *ms_file;
         GtkWidget *ms_file_quit;
+        GtkWidget *m_edit;
+        GtkWidget *ms_edit;
+        GtkWidget *ms_edit_cut;
+        GtkWidget *ms_edit_copy;
+        GtkWidget *ms_edit_paste;
+        GtkWidget *ms_edit_select_all;
         GtkWidget *m_help;
         GtkWidget *ms_help;
         GtkWidget *ms_help_about;
@@ -60,6 +66,19 @@ static void gtkscope_app_activate(GtkScopeApp *app)
         gtk_menu_shell_append(GTK_MENU_SHELL(m_file), ms_file_quit);
         g_signal_connect(G_OBJECT(ms_file_quit), "activate", G_CALLBACK(gtkscope_app_exit), NULL);
         
+        m_edit = gtk_menu_new();
+        ms_edit = gtk_menu_item_new_with_label("Edit");
+        ms_edit_cut = gtk_menu_item_new_with_label("Cut");
+        ms_edit_copy = gtk_menu_item_new_with_label("Copy");
+        ms_edit_paste = gtk_menu_item_new_with_label("Paste");
+        ms_edit_select_all = gtk_menu_item_new_with_label("Select All");
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(ms_edit), m_edit);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), ms_edit);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_cut);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_copy);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_paste);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_select_all);
+
         m_help = gtk_menu_new();
         ms_help= gtk_menu_item_new_with_label("Help");
         ms_help_about = gtk_menu_item_new_with_label("About");
@@ -109,7 +128,7 @@ GtkScopeApp *gtkscope_app_new (void)
 
 static void gtkscope_app_exit(GtkWidget *gtk_widget) 
 {
-        g_print("Exit pressed");
+        g_print("Exit pressed\n");
         exit(0);
 }
 
