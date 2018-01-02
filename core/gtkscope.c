@@ -30,6 +30,7 @@ static void gtkscope_app_class_init(GtkScopeAppClass *class);
  * Provide nice and clean API just like menu.h
  * Add event handlers
  * GtkSourceView or Scintilla integration
+ * Fix destroy event, that cause killing all instances when closing single window
  */
 
 int main(int argc, char *argv[])
