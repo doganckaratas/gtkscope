@@ -8,14 +8,15 @@
  */
 
 #include <gtk/gtk.h>
+#include "gtkscopewin.h"
 #include "menu.h"
 
 void gtkscope_app_menu_init(struct menu *m)
 {
         m->menubar = gtk_menu_bar_new();
-        m->m_file = gtk_menu_new();
-        m->m_edit = gtk_menu_new();
-        m->m_help = gtk_menu_new();
+        m->file.m_file = gtk_menu_new();
+        m->edit.m_edit = gtk_menu_new();
+        m->help.m_help = gtk_menu_new();
 }
 
 void gtkscope_app_menu_items(struct menu *m)
@@ -33,20 +34,20 @@ void gtkscope_app_menu_items(struct menu *m)
 
 void gtkscope_app_menu(struct menu *m)
 {
-        gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->s_file), m->m_file);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menubar), m->s_file);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m->m_file), m->file.quit);
-        g_signal_connect(G_OBJECT(m->file.quit), "activate", G_CALLBACK(gtkscope_app_exit), NULL);
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->file.s_file), m->file.m_file);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->menubar), m->file.s_file);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->file.m_file), m->file.items.quit);
+        g_signal_connect(G_OBJECT(m->file.items.quit), "activate", G_CALLBACK(gtkscope_app_exit), NULL);
 
-        gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->s_edit), m->m_edit);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menubar), m->s_edit);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m->m_edit), m->edit.cut);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m->m_edit), m->edit.copy);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m->m_edit), m->edit.paste);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m->m_edit), m->edit.select_all);
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->edit.s_edit), m->edit.m_edit);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->menubar), m->edit.s_edit);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->edit.m_edit), m->edit.items.cut);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->edit.m_edit), m->edit.items.copy);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->edit.m_edit), m->edit.items.paste);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->edit.m_edit), m->edit.items.select_all);
 
-        gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->s_help), m->m_help);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menubar), m->s_help);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m->m_help), m->help.about);
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->help.s_help), m->help.m_help);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->menubar), m->help.s_help);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m->help.m_help), m->help.items.about);
 }
 

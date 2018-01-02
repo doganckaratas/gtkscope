@@ -33,8 +33,8 @@ struct menu {
         } help;
 };
 
-void gtkscope_app_menu_init(struct menu *);
-void gtkscope_app_menu_items(struct menu *)
-void gtkscope_app_menu(struct menu *);
+void gtkscope_app_menu_init(struct menu *m);
+void gtkscope_app_menu_items(struct menu *m);
+void gtkscope_app_menu(struct menu *m);
 
 #endif 

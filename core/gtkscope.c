@@ -16,6 +16,7 @@
 
 #include "gtkscope.h"
 #include "gtkscopewin.h"
+#include "menu.h"
 
 G_DEFINE_TYPE(GtkScopeApp, gtkscope_app, GTK_TYPE_APPLICATION);
 
@@ -23,8 +24,6 @@ static void gtkscope_app_init(GtkScopeApp *app);
 static void gtkscope_app_activate(GtkScopeApp *app);
 static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, const gchar *hint);
 static void gtkscope_app_class_init(GtkScopeAppClass *class);
-GtkScopeApp *gtkscope_app_new(void);
-static void gtkscope_app_exit(GtkWidget *gtk_widget); 
 
 int main(int argc, char *argv[])
 {
@@ -34,60 +33,22 @@ int main(int argc, char *argv[])
 
 static void gtkscope_app_init(GtkScopeApp *app)
 {
-
+        ;
 }
 
 static void gtkscope_app_activate(GtkScopeApp *app)
 {
+        struct menu m; 
         GtkScopeAppWindow *win;
-        GtkWidget *menu;
         GtkWidget *box;
-        GtkWidget *m_file;
-        GtkWidget *ms_file;
-        GtkWidget *ms_file_quit;
-        GtkWidget *m_edit;
-        GtkWidget *ms_edit;
-        GtkWidget *ms_edit_cut;
-        GtkWidget *ms_edit_copy;
-        GtkWidget *ms_edit_paste;
-        GtkWidget *ms_edit_select_all;
-        GtkWidget *m_help;
-        GtkWidget *ms_help;
-        GtkWidget *ms_help_about;
-
-        menu = gtk_menu_bar_new();
-        win = gtkscope_app_window_new (GTKSCOPE_APP(app));
-
-        m_file = gtk_menu_new();
-        ms_file = gtk_menu_item_new_with_label("File");
-        ms_file_quit = gtk_menu_item_new_with_label("Quit");
-        gtk_menu_item_set_submenu(GTK_MENU_ITEM(ms_file), m_file);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), ms_file);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_file), ms_file_quit);
-        g_signal_connect(G_OBJECT(ms_file_quit), "activate", G_CALLBACK(gtkscope_app_exit), NULL);
         
-        m_edit = gtk_menu_new();
-        ms_edit = gtk_menu_item_new_with_label("Edit");
-        ms_edit_cut = gtk_menu_item_new_with_label("Cut");
-        ms_edit_copy = gtk_menu_item_new_with_label("Copy");
-        ms_edit_paste = gtk_menu_item_new_with_label("Paste");
-        ms_edit_select_all = gtk_menu_item_new_with_label("Select All");
-        gtk_menu_item_set_submenu(GTK_MENU_ITEM(ms_edit), m_edit);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), ms_edit);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_cut);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_copy);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_paste);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_edit), ms_edit_select_all);
+        gtkscope_app_menu_init(&m);
+        gtkscope_app_menu_items(&m);
+        gtkscope_app_menu(&m);
 
-        m_help = gtk_menu_new();
-        ms_help= gtk_menu_item_new_with_label("Help");
-        ms_help_about = gtk_menu_item_new_with_label("About");
-        gtk_menu_item_set_submenu(GTK_MENU_ITEM(ms_help), m_help);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), ms_help);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m_help), ms_help_about);
-
+        win = gtkscope_app_window_new (GTKSCOPE_APP(app));
         box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-        gtk_box_pack_start(GTK_BOX(box), menu, FALSE, FALSE, 3);
+        gtk_box_pack_start(GTK_BOX(box), (&m)->menubar, FALSE, FALSE, 3);
         gtk_container_add(GTK_CONTAINER(win), box);
 
         gtk_window_set_default_size(GTK_WINDOW(win), DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -126,7 +87,7 @@ GtkScopeApp *gtkscope_app_new (void)
 	return g_object_new (GTKSCOPE_APP_TYPE, "application-id", "org.gtk.gtkscope", "flags", G_APPLICATION_HANDLES_OPEN, NULL);
 }
 
-static void gtkscope_app_exit(GtkWidget *gtk_widget) 
+void gtkscope_app_exit(GtkWidget *gtk_widget) 
 {
         g_print("Exit pressed\n");
         exit(0);
