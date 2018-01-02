@@ -25,6 +25,13 @@ static void gtkscope_app_activate(GtkScopeApp *app);
 static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, const gchar *hint);
 static void gtkscope_app_class_init(GtkScopeAppClass *class);
 
+/* TODO
+ * Move all view related things into view folder,
+ * Provide nice and clean API just like menu.h
+ * Add event handlers
+ * GtkSourceView or Scintilla integration
+ */
+
 int main(int argc, char *argv[])
 {
         return g_application_run(G_APPLICATION(gtkscope_app_new()), argc, argv);
@@ -46,9 +53,18 @@ static void gtkscope_app_activate(GtkScopeApp *app)
         gtkscope_app_menu_items(&m);
         gtkscope_app_menu(&m);
 
+        GtkWidget *view;
+        GtkTextBuffer *buffer;
+
+        /* Dummy View */
+        view = gtk_text_view_new();
+        buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
+        gtk_text_buffer_set_text(buffer, "", -1);
+
         win = gtkscope_app_window_new (GTKSCOPE_APP(app));
-        box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-        gtk_box_pack_start(GTK_BOX(box), (&m)->menubar, FALSE, FALSE, 3);
+        box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        gtk_box_pack_start(GTK_BOX(box), (&m)->menubar, FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(box), view, TRUE, TRUE, 0);
         gtk_container_add(GTK_CONTAINER(win), box);
 
         gtk_window_set_default_size(GTK_WINDOW(win), DEFAULT_WIDTH, DEFAULT_HEIGHT);
