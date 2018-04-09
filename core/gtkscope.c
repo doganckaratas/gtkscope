@@ -16,6 +16,7 @@
 
 #include "gtkscope.h"
 #include "gtkscopewin.h"
+#include "view.h"
 #include "menu.h"
 
 G_DEFINE_TYPE(GtkScopeApp, gtkscope_app, GTK_TYPE_APPLICATION);
@@ -26,11 +27,11 @@ static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, con
 static void gtkscope_app_class_init(GtkScopeAppClass *class);
 
 /* TODO
- * Move all view related things into view folder,
+ * XXX Move all view related things into view folder,
  * Provide nice and clean API just like menu.h
  * Add event handlers
  * GtkSourceView or Scintilla integration
- * Fix destroy event, that cause killing all instances when closing single window
+ * XXX Fix destroy event, that cause killing all instances when closing single window
  */
 
 int main(int argc, char *argv[])
@@ -46,37 +47,20 @@ static void gtkscope_app_init(GtkScopeApp *app)
 
 static void gtkscope_app_activate(GtkScopeApp *app)
 {
+	/* run with no arguments */
         struct menu m; 
-        GtkScopeAppWindow *win;
-        GtkWidget *box;
         
         gtkscope_app_menu_init(&m);
         gtkscope_app_menu_items(&m);
         gtkscope_app_menu(&m);
 
-        GtkWidget *view;
-        GtkTextBuffer *buffer;
-
-        /* Dummy View */
-        view = gtk_text_view_new();
-        buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
-        gtk_text_buffer_set_text(buffer, "", -1);
-
-        win = gtkscope_app_window_new (GTKSCOPE_APP(app));
-        box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        gtk_box_pack_start(GTK_BOX(box), (&m)->menubar, FALSE, FALSE, 0);
-        gtk_box_pack_start(GTK_BOX(box), view, TRUE, TRUE, 0);
-        gtk_container_add(GTK_CONTAINER(win), box);
-
-        gtk_window_set_default_size(GTK_WINDOW(win), DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        gtk_window_set_title(GTK_WINDOW(win), "GTKScope");
-        g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(gtkscope_app_exit), NULL);
-        gtk_window_present (GTK_WINDOW(win));
-        gtk_widget_show_all(box);
+	gtkscope_app_view_init(app, &m);
 }
 
 static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, const gchar *hint)
 {
+	/* run with arguments */
+	/* FIXME: move this to view.c */
 	GList *windows;
 	GtkScopeAppWindow *win;
 	int i;
@@ -107,6 +91,6 @@ GtkScopeApp *gtkscope_app_new (void)
 void gtkscope_app_exit(GtkWidget *gtk_widget) 
 {
         g_print("Exit pressed\n");
-        exit(0);
+        return;
 }
 
