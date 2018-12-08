@@ -1,5 +1,5 @@
 /**
- * GTKScope Project 
+ * GTKScope Project
  * v0.1 - 12/2017
  * Dogan C. Karatas
  *
@@ -36,23 +36,22 @@ static void gtkscope_app_class_init(GtkScopeAppClass *class);
 
 int main(int argc, char *argv[])
 {
-        return g_application_run(G_APPLICATION(gtkscope_app_new()), argc, argv);
+	return g_application_run(G_APPLICATION(gtkscope_app_new()), argc, argv);
 }
 
 
 static void gtkscope_app_init(GtkScopeApp *app)
 {
-        ;
+	;
 }
 
 static void gtkscope_app_activate(GtkScopeApp *app)
 {
 	/* run with no arguments */
-        struct menu m; 
-        
-        gtkscope_app_menu_init(&m);
-        gtkscope_app_menu_items(&m);
-        gtkscope_app_menu(&m);
+	struct menu m;
+
+	gtkscope_app_menu_init(&m);
+	gtkscope_app_menu(&m);
 
 	gtkscope_app_view_init(app, &m);
 }
@@ -90,7 +89,7 @@ GtkScopeApp *gtkscope_app_new (void)
 
 void gtkscope_app_exit(GtkWidget *gtk_widget) 
 {
-        g_print("Exit pressed\n");
-        return;
+	g_print("Exit pressed\n");
+	return;
 }
 

@@ -1,5 +1,5 @@
 /**
- * GTKScope Project 
+ * GTKScope Project
  * v0.1 - 12/2017
  * Dogan C. Karatas
  *
