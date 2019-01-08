@@ -8,10 +8,10 @@
  */
 
 #include <gtk/gtk.h>
-#include "gtkscopewin.h"
+#include "window.h"
 #include "menu.h"
 
-void gtkscope_app_menu_init(struct menu *m)
+void menu_init(struct menu *m)
 {
 	m->menubar = gtk_menu_bar_new();
 	m->file.m_file = gtk_menu_new();
@@ -20,16 +20,16 @@ void gtkscope_app_menu_init(struct menu *m)
 	m->help.m_help = gtk_menu_new();
 }
 
-void gtkscope_app_menu(struct menu *m)
+void menu_show(struct menu *m)
 {
-	gtkscope_app_menu_file(m);
-	gtkscope_app_menu_edit(m);
-	gtkscope_app_menu_tools(m);
-	gtkscope_app_menu_help(m);
+	menu_file(m);
+	menu_edit(m);
+	menu_tools(m);
+	menu_help(m);
 }
 
 
-void gtkscope_app_menu_file(struct menu *m)
+void menu_file(struct menu *m)
 {
 	/* set label */
 	m->file.s_file = gtk_menu_item_new_with_label("File");
@@ -39,10 +39,10 @@ void gtkscope_app_menu_file(struct menu *m)
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(m->file.s_file), m->file.m_file);
 	gtk_menu_shell_append(GTK_MENU_SHELL(m->menubar), m->file.s_file);
 	gtk_menu_shell_append(GTK_MENU_SHELL(m->file.m_file), m->file.items.quit);
-	g_signal_connect(G_OBJECT(m->file.items.quit), "activate", G_CALLBACK(gtkscope_app_exit), NULL);
+	g_signal_connect(G_OBJECT(m->file.items.quit), "activate", G_CALLBACK(gtkscope_exit), NULL);
 }
 
-void gtkscope_app_menu_edit(struct menu *m)
+void menu_edit(struct menu *m)
 {
 	m->edit.s_edit = gtk_menu_item_new_with_label("Edit");
 	m->edit.items.cut = gtk_menu_item_new_with_label("Cut");
@@ -58,7 +58,7 @@ void gtkscope_app_menu_edit(struct menu *m)
 	gtk_menu_shell_append(GTK_MENU_SHELL(m->edit.m_edit), m->edit.items.select_all);
 }
 
-void gtkscope_app_menu_tools(struct menu *m)
+void menu_tools(struct menu *m)
 {
 	m->tools.s_tools = gtk_menu_item_new_with_label("Tools");
 	m->tools.items.preferences = gtk_menu_item_new_with_label("Preferences");
@@ -68,7 +68,7 @@ void gtkscope_app_menu_tools(struct menu *m)
 	gtk_menu_shell_append(GTK_MENU_SHELL(m->tools.m_tools), m->tools.items.preferences);
 }
 
-void gtkscope_app_menu_help(struct menu *m)
+void menu_help(struct menu *m)
 {
 	m->help.s_help = gtk_menu_item_new_with_label("Help");
 	m->help.items.about = gtk_menu_item_new_with_label("About");

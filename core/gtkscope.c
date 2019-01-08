@@ -15,16 +15,16 @@
 #include <gtk/gtk.h>
 
 #include "gtkscope.h"
-#include "gtkscopewin.h"
+#include "window.h"
 #include "view.h"
 #include "menu.h"
 
-G_DEFINE_TYPE(GtkScopeApp, gtkscope_app, GTK_TYPE_APPLICATION);
+G_DEFINE_TYPE(GtkScope, gtkscope, GTK_TYPE_APPLICATION);
 
-static void gtkscope_app_init(GtkScopeApp *app);
-static void gtkscope_app_activate(GtkScopeApp *app);
-static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, const gchar *hint);
-static void gtkscope_app_class_init(GtkScopeAppClass *class);
+static void gtkscope_init(GtkScope *app);
+static void gtkscope_activate(GtkScope *app);
+static void gtkscope_open(GtkScope *app, GFile **files, gint n_files, const gchar *hint);
+static void gtkscope_class_init(GtkScopeClass *class);
 
 /* TODO
  * XXX Move all view related things into view folder,
@@ -36,60 +36,59 @@ static void gtkscope_app_class_init(GtkScopeAppClass *class);
 
 int main(int argc, char *argv[])
 {
-	return g_application_run(G_APPLICATION(gtkscope_app_new()), argc, argv);
+	return g_application_run(G_APPLICATION(gtkscope_new()), argc, argv);
 }
 
 
-static void gtkscope_app_init(GtkScopeApp *app)
+static void gtkscope_init(GtkScope *app)
 {
 	;
 }
 
-static void gtkscope_app_activate(GtkScopeApp *app)
+static void gtkscope_activate(GtkScope *app)
 {
 	/* run with no arguments */
 	struct menu m;
 
-	gtkscope_app_menu_init(&m);
-	gtkscope_app_menu(&m);
-
-	gtkscope_app_view_init(app, &m);
+	menu_init(&m);
+	menu_show(&m);
+	view_init(app, &m);
 }
 
-static void gtkscope_app_open(GtkScopeApp *app, GFile **files, gint n_files, const gchar *hint)
+static void gtkscope_open(GtkScope *app, GFile **files, gint n_files, const gchar *hint)
 {
 	/* run with arguments */
 	/* FIXME: move this to view.c */
 	GList *windows;
-	GtkScopeAppWindow *win;
+	GtkScopeWindow *win;
 	int i;
 
-	windows = gtk_application_get_windows (GTK_APPLICATION (app));
+	windows = gtk_application_get_windows(GTK_APPLICATION(app));
 	if (windows)
-		win = GTKSCOPE_APP_WINDOW (windows->data);
+		win = GTKSCOPE_WINDOW(windows->data);
 	else
-		win = gtkscope_app_window_new (GTKSCOPE_APP (app));
+		win = window_new(GTKSCOPE_APP(app));
 
 	for (i = 0; i < n_files; i++)
-		gtkscope_app_window_open (win, files[i]);
+		window_open(win, files[i]);
 
-	gtk_window_present (GTK_WINDOW (win));
+	gtk_window_present(GTK_WINDOW(win));
 }
 
-static void gtkscope_app_class_init (GtkScopeAppClass *class)
+static void gtkscope_class_init (GtkScopeClass *class)
 {
-	G_APPLICATION_CLASS (class)->activate = (void* ) gtkscope_app_activate;
-	G_APPLICATION_CLASS (class)->open = (void* ) gtkscope_app_open;
+	G_APPLICATION_CLASS(class)->activate = (void *) gtkscope_activate;
+	G_APPLICATION_CLASS(class)->open = (void *) gtkscope_open;
 }
 
-GtkScopeApp *gtkscope_app_new (void)
+GtkScope *gtkscope_new (void)
 {
 	return g_object_new (GTKSCOPE_APP_TYPE, "application-id", "org.gtk.gtkscope", "flags", G_APPLICATION_HANDLES_OPEN, NULL);
 }
 
-void gtkscope_app_exit(GtkWidget *gtk_widget) 
+void gtkscope_exit(GtkWidget *gtk_widget)
 {
 	g_print("Exit pressed\n");
-	return;
+	exit(0);
 }
 

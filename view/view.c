@@ -14,15 +14,15 @@
 
 #include <gtk/gtk.h>
 
-#include "gtkscopewin.h"
+#include "window.h"
 #include "view.h"
 #include "menu.h"
 
-void gtkscope_app_view_init(GtkScopeApp *app, struct menu *m)
+void view_init(GtkScope *app, struct menu *m)
 {
 	GtkWidget *view;
 	GtkTextBuffer *buffer;
-	GtkScopeAppWindow *win;
+	GtkScopeWindow *win;
 	GtkWidget *box;
 
 	/* Dummy View */
@@ -30,7 +30,7 @@ void gtkscope_app_view_init(GtkScopeApp *app, struct menu *m)
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
 	gtk_text_buffer_set_text(buffer, "", -1);
 
-	win = gtkscope_app_window_new (GTKSCOPE_APP(app));
+	win = window_new(GTKSCOPE_APP(app));
 	box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 	gtk_box_pack_start(GTK_BOX(box), (m)->menubar, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(box), view, TRUE, TRUE, 0);
@@ -38,12 +38,12 @@ void gtkscope_app_view_init(GtkScopeApp *app, struct menu *m)
 
 	gtk_window_set_default_size(GTK_WINDOW(win), DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	gtk_window_set_title(GTK_WINDOW(win), "GTKScope");
-	g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(gtkscope_app_exit), NULL);
+	g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(gtkscope_exit), NULL);
 	gtk_window_present (GTK_WINDOW(win));
 	gtk_widget_show_all(box);
 }
 
-void gtkscope_app_view_args_init(GtkScopeApp *app, struct menu *m)
+void view_args_init(GtkScope *app, struct menu *m)
 {
 #if 0
 	GtkWidget *view;

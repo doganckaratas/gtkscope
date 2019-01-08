@@ -41,11 +41,11 @@ struct menu {
 	} help;
 };
 
-void gtkscope_app_menu_init(struct menu *m);
-void gtkscope_app_menu(struct menu *m);
-void gtkscope_app_menu_file(struct menu *m);
-void gtkscope_app_menu_edit(struct menu *m);
-void gtkscope_app_menu_tools(struct menu *m);
-void gtkscope_app_menu_help(struct menu *m);
+void menu_init(struct menu *m);
+void menu_show(struct menu *m);
+void menu_file(struct menu *m);
+void menu_edit(struct menu *m);
+void menu_tools(struct menu *m);
+void menu_help(struct menu *m);
 
 #endif

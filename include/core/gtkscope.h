@@ -12,17 +12,17 @@
 
 #include <gtk/gtk.h>
 
-#define DEFAULT_WIDTH 1024 
+#define DEFAULT_WIDTH 1024
 #define DEFAULT_HEIGHT 768
-#define GTKSCOPE_APP_TYPE (gtkscope_app_get_type ())
+#define GTKSCOPE_APP_TYPE (gtkscope_get_type())
 
-struct _GtkScopeApp {
+struct _GtkScope {
 	GtkApplication parent;
 };
 
-G_DECLARE_FINAL_TYPE (GtkScopeApp, gtkscope_app, GTKSCOPE, APP, GtkApplication)
+G_DECLARE_FINAL_TYPE (GtkScope, gtkscope, GTKSCOPE, APP, GtkApplication)
 
-GtkScopeApp     *gtkscope_app_new       (void);
-void gtkscope_app_exit(GtkWidget *gtk_widget); 
+GtkScope *gtkscope_new(void);
+void gtkscope_exit(GtkWidget *gtk_widget);
 
 #endif
