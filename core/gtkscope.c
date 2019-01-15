@@ -14,10 +14,10 @@
 
 #include <gtk/gtk.h>
 
-#include "gtkscope.h"
-#include "window.h"
-#include "view.h"
-#include "menu.h"
+#include "core/gtkscope.h"
+#include "view/view.h"
+#include "view/window.h"
+#include "view/menu.h"
 
 G_DEFINE_TYPE(GtkScope, gtkscope, GTK_TYPE_APPLICATION);
 

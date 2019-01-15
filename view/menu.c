@@ -8,8 +8,8 @@
  */
 
 #include <gtk/gtk.h>
-#include "window.h"
-#include "menu.h"
+#include "view/window.h"
+#include "view/menu.h"
 
 void menu_init(struct menu *m)
 {

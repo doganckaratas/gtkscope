@@ -9,8 +9,8 @@
 
 #include <gtk/gtk.h>
 
-#include "gtkscope.h"
-#include "window.h"
+#include "core/gtkscope.h"
+#include "view/window.h"
 
 G_DEFINE_TYPE(GtkScopeWindow, window, GTK_TYPE_APPLICATION_WINDOW);
 

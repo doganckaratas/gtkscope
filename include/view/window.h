@@ -11,7 +11,7 @@
 #define __GTKSCOPEWIN_H
 
 #include <gtk/gtk.h>
-#include "gtkscope.h"
+#include "core/gtkscope.h"
 
 #define GTKSCOPE_WINDOW_TYPE (window_get_type())
 

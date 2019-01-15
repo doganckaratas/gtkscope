@@ -3,7 +3,7 @@
 
 #include <gtk/gtk.h>
 
-#include "menu.h"
+#include "view/menu.h"
 
 void view_init(GtkScope *app, struct menu *m);
 void view_args_init(GtkScope *app, struct menu *m);

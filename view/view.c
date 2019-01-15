@@ -14,9 +14,9 @@
 
 #include <gtk/gtk.h>
 
-#include "window.h"
-#include "view.h"
-#include "menu.h"
+#include "view/window.h"
+#include "view/view.h"
+#include "view/menu.h"
 
 void view_init(GtkScope *app, struct menu *m)
 {
